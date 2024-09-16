@@ -1,0 +1,22 @@
+server:
+  host: 0.0.0.0
+  port: 8080
+  http:
+    shutdown_timeout: 5s
+    read_timeout: 0s
+    write_timeout: 0s
+    idle_timeout: 0s
+
+postgres:
+  dsn: host=postgres port=5432 user=postgres sslmode=disable
+  max_idle_connections: 0
+  max_open_connections: 0
+  conn_max_idle_time: 0s
+
+logger:
+  level: debug
+  add_source: false
+
+jwt:
+  secret: 8ebe4ddf8ab9f09a262faaec94aabaa7cb15aad80257a5971e10a94526928b17
+  token_ttl: 60m
