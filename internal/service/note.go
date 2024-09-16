@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 
 	"github.com/bojackodin/notes/internal/entity"
 	"github.com/bojackodin/notes/internal/repository"
@@ -24,9 +23,6 @@ func NewNoteService(noteRepository repository.Note, speller speller.Speller) *No
 func (s *NoteService) CreateNote(ctx context.Context, title string, userID int64) (int64, error) {
 	err := s.speller.Check(ctx, title)
 	if err != nil {
-		if errors.As(err, &speller.SpellError{}) {
-			return 0, err
-		}
 		return 0, err
 	}
 

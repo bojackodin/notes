@@ -43,7 +43,8 @@ func (ctrl *Controller) CreateNote(w http.ResponseWriter, r *http.Request) error
 	id, err := ctrl.notes.CreateNote(r.Context(), input.Title, userID)
 	if err != nil {
 		code := http.StatusInternalServerError
-		if errors.As(err, &speller.SpellError{}) {
+		var spellErr speller.SpellError
+		if errors.As(err, &spellErr) {
 			code = http.StatusUnprocessableEntity
 		}
 		logger.Error("failed to create task", log.Err(err))
