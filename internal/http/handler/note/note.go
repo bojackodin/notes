@@ -9,7 +9,7 @@ import (
 	"github.com/bojackodin/notes/internal/http/httperror"
 	"github.com/bojackodin/notes/internal/log"
 	"github.com/bojackodin/notes/internal/service"
-	"github.com/bojackodin/notes/internal/service/serviceerror"
+	"github.com/bojackodin/notes/internal/yandex/speller"
 )
 
 type Controller struct {
@@ -43,7 +43,7 @@ func (ctrl *Controller) CreateNote(w http.ResponseWriter, r *http.Request) error
 	id, err := ctrl.notes.CreateNote(r.Context(), input.Title, userID)
 	if err != nil {
 		code := http.StatusInternalServerError
-		if errors.Is(err, serviceerror.ErrSpeller) {
+		if errors.As(err, &speller.SpellError{}) {
 			code = http.StatusUnprocessableEntity
 		}
 		logger.Error("failed to create task", log.Err(err))

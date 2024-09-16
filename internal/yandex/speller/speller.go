@@ -3,7 +3,6 @@ package speller
 import (
 	"context"
 	"encoding/json"
-	"io"
 	"net/http"
 )
 
@@ -22,42 +21,30 @@ func NewYandexSpeller() *YandexSpeller {
 type Misspell struct {
 	Pos  int    `json:"pos"`
 	Word string `json:"word"`
-	// Row  int    `json:"row"`
-	// Col  int    `json:"col"`
-	// Suggestions []string `json:"s"`
 }
 
 func (y *YandexSpeller) Check(ctx context.Context, text string) error {
-	r, err := http.NewRequestWithContext(ctx, http.MethodGet, serviceURL, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, serviceURL, nil)
 	if err != nil {
 		return err
 	}
-	q := r.URL.Query()
+
+	q := req.URL.Query()
 	q.Add("text", text)
-	r.URL.RawQuery = q.Encode()
+	req.URL.RawQuery = q.Encode()
 
-	resp, err := http.DefaultClient.Do(r)
-	if err != nil {
-		return err
-	}
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	err = resp.Body.Close()
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
 	}
 
 	var misspells []Misspell
-	if err = json.Unmarshal(body, &misspells); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&misspells); err != nil {
 		return err
 	}
 
 	if len(misspells) > 0 {
-		return ErrorSpell{misspells}
+		return SpellError{misspells}
 	}
 
 	return nil

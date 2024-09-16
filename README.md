@@ -32,3 +32,10 @@ curl -i -X POST \
 -H "Content-Type: application/json" \
 -d '{"title":"This is a simple text without errors"}' \
 localhost:8080/notes
+
+curl -i -X POST \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjY0NjkxOTcsImlhdCI6MTcyNjQ2NTU5NywidXNlcl9pZCI6NH0.BS5zfrVahEfxBmFEINEJYeYMoIZilfUnZvSjbyPS8kw" \
+-H "Content-Type: application/json" \
+-d '{"title":"This is a smple text with erors"}' \
+localhost:8080/notes
+
