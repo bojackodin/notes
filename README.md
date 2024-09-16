@@ -1,3 +1,5 @@
+# make docker.image 
+
 # docker compose -f deployment/docker-compose.yml up -d
 
 # docker run --rm -v $(pwd)/migrations:/migrations --network host migrate/migrate -path /migrations -database 'postgres://postgres:password@localhost:5432/?sslmode=disable' up
