@@ -16,7 +16,7 @@ type User interface {
 
 type Note interface {
 	CreateNote(ctx context.Context, note *entity.Note) error
-	ListNotes(ctx context.Context, userID int64) ([]*entity.Note, error)
+	ListNotes(ctx context.Context, userID int64) ([]entity.Note, error)
 }
 
 type Repositories struct {

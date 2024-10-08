@@ -17,7 +17,7 @@ type Auth interface {
 
 type Note interface {
 	CreateNote(ctx context.Context, title string, userID int64) (int64, error)
-	ListNotes(ctx context.Context, userID int64) ([]*entity.Note, error)
+	ListNotes(ctx context.Context, userID int64) ([]entity.Note, error)
 }
 
 type Services struct {

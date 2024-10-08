@@ -45,11 +45,7 @@ func (s *Server) Run(ctx context.Context) error {
 	serveErr := make(chan error, 1)
 	go func() {
 		logger.Info("listening")
-		if s.server.TLSConfig != nil {
-			serveErr <- s.server.ListenAndServeTLS("", "")
-		} else {
-			serveErr <- s.server.ListenAndServe()
-		}
+		serveErr <- s.server.ListenAndServe()
 	}()
 
 	select {

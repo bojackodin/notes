@@ -39,6 +39,6 @@ func (s *NoteService) CreateNote(ctx context.Context, title string, userID int64
 	return note.ID, nil
 }
 
-func (s *NoteService) ListNotes(ctx context.Context, userID int64) ([]*entity.Note, error) {
+func (s *NoteService) ListNotes(ctx context.Context, userID int64) ([]entity.Note, error) {
 	return s.noteRepository.ListNotes(ctx, userID)
 }

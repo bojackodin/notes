@@ -26,7 +26,7 @@ func (db *NoteRepository) CreateNote(ctx context.Context, note *entity.Note) err
 	return db.client.QueryRowContext(ctx, query, note.UserID, note.Title).Scan(&note.ID)
 }
 
-func (db *NoteRepository) ListNotes(ctx context.Context, userID int64) ([]*entity.Note, error) {
+func (db *NoteRepository) ListNotes(ctx context.Context, userID int64) ([]entity.Note, error) {
 	query := `
 		SELECT id, user_id, title
 		FROM notes
@@ -38,7 +38,7 @@ func (db *NoteRepository) ListNotes(ctx context.Context, userID int64) ([]*entit
 	}
 	defer rows.Close()
 
-	notes := []*entity.Note{}
+	notes := make([]entity.Note, 0)
 
 	for rows.Next() {
 		var note entity.Note
@@ -52,7 +52,7 @@ func (db *NoteRepository) ListNotes(ctx context.Context, userID int64) ([]*entit
 			return nil, err
 		}
 
-		notes = append(notes, &note)
+		notes = append(notes, note)
 	}
 
 	if err := rows.Err(); err != nil {
