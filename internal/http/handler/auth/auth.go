@@ -8,7 +8,6 @@ import (
 	"github.com/bojackodin/notes/internal/http/httperror"
 	"github.com/bojackodin/notes/internal/log"
 	"github.com/bojackodin/notes/internal/service"
-	"github.com/bojackodin/notes/internal/service/serviceerror"
 )
 
 type Controller struct {
@@ -43,7 +42,7 @@ func (ctrl *Controller) SignUp(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		logger.Error("failed to create user", log.Err(err))
 		code := http.StatusInternalServerError
-		if errors.Is(err, serviceerror.ErrUserDuplicate) {
+		if errors.Is(err, service.ErrUserDuplicate) {
 			code = http.StatusBadRequest
 		}
 		return httperror.WithStatusError(err, code)

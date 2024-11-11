@@ -43,7 +43,7 @@ func (ctrl *Controller) CreateNote(w http.ResponseWriter, r *http.Request) error
 	id, err := ctrl.notes.CreateNote(r.Context(), input.Title, userID)
 	if err != nil {
 		code := http.StatusInternalServerError
-		var spellErr speller.SpellError
+		var spellErr *speller.SpellError
 		if errors.As(err, &spellErr) {
 			code = http.StatusUnprocessableEntity
 		}

@@ -8,7 +8,7 @@ type SpellError struct {
 	Misspells []Misspell
 }
 
-func (e SpellError) Error() string {
+func (e *SpellError) Error() string {
 	var str string
 	lastIndex := len(e.Misspells) - 1
 	for i, m := range e.Misspells {

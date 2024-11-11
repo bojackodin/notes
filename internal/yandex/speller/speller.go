@@ -44,7 +44,7 @@ func (y *YandexSpeller) Check(ctx context.Context, text string) error {
 	}
 
 	if len(misspells) > 0 {
-		return SpellError{misspells}
+		return &SpellError{misspells}
 	}
 
 	return nil

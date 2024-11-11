@@ -8,7 +8,6 @@ import (
 	"github.com/bojackodin/notes/internal/entity"
 	"github.com/bojackodin/notes/internal/repository"
 	"github.com/bojackodin/notes/internal/repository/repositoryerror"
-	"github.com/bojackodin/notes/internal/service/serviceerror"
 
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
@@ -47,7 +46,7 @@ func (s *AuthService) CreateUser(ctx context.Context, username, password string)
 	userId, err := s.userRepository.CreateUser(ctx, user)
 	if err != nil {
 		if errors.Is(err, repositoryerror.ErrDuplicate) {
-			return 0, serviceerror.ErrUserDuplicate
+			return 0, ErrUserDuplicate
 		}
 		return 0, err
 	}
