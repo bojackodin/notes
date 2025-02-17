@@ -46,7 +46,6 @@ type config struct {
 			IdleTimeout     time.Duration `yaml:"idle_timeout" split_words:"true"`
 		} `yaml:"http"`
 	} `yaml:"server"`
-	Env    string `yaml:"env"`
 	Logger struct {
 		Level     string `yaml:"level"`
 		AddSource bool   `yaml:"add_source" split_words:"true"`
